@@ -1,0 +1,19 @@
+{
+    "name": "express-project",
+    "version": "1.0.0",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "express": "^5.1.0",
+        "express-handlebars": "^8.0.3",
+        "mongoose": "^8.19.3"
+    }
+}
