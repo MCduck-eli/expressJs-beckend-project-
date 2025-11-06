@@ -1,4 +1,6 @@
 import { Router } from "express";
+import User from "../modules/User.js";
+import bcrypt from "bcrypt";
 
 const router = Router();
 
@@ -15,8 +17,11 @@ router.get("/login", (req, res) => {
     });
 });
 
-router.post("/login", (req, res) => {
-    console.log(req.body);
+router.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+    const userExit = await User.findOne({ email });
+    console.log(userExit);
+
     res.redirect("/");
 });
 
@@ -27,8 +32,19 @@ router.get("/register", (req, res) => {
     });
 });
 
-router.post("/register", (req, res) => {
-    console.log(req.body);
+router.post("/register", async (req, res) => {
+    const { userName, lastName, email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const userBase = {
+        userName: userName,
+        lastName: lastName,
+        email: email,
+        password: hashedPassword,
+    };
+
+    const user = await User.create(userBase);
+    console.log(user);
+
     res.redirect("/");
 });
 

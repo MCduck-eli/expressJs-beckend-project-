@@ -1,7 +1,11 @@
 import express, { json } from "express";
 import { create } from "express-handlebars";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
 import AuthRouter from "./route/auth.js";
 import ProductsRoter from "./route/product.js";
+
+dotenv.config();
 
 const app = express();
 
@@ -23,8 +27,12 @@ app.use(json());
 app.use(AuthRouter);
 app.use(ProductsRoter);
 
-const startApp = () => {
+const startApp = async () => {
     try {
+        await mongoose.connect(
+            process.env.MONGO_URL,
+            console.log("Database connected")
+        );
         const PORT = process.env.PORT || 4100;
         app.listen(PORT, console.log("Port worked succesfully"));
     } catch (error) {
