@@ -2,6 +2,8 @@ import express, { json } from "express";
 import { create } from "express-handlebars";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import session from "express-session";
+import flash from "connect-flash";
 import AuthRouter from "./route/auth.js";
 import ProductsRoter from "./route/product.js";
 
@@ -22,6 +24,8 @@ app.set("views", "./views");
 
 app.use(express.static("views"));
 app.use(express.urlencoded({ extended: true }));
+app.use(session({ secret: "Eli", resave: false, saveUninitialized: false }));
+app.use(flash());
 app.use(json());
 
 app.use(AuthRouter);
@@ -33,7 +37,7 @@ const startApp = async () => {
             process.env.MONGO_URL,
             console.log("Database connected")
         );
-        const PORT = process.env.PORT || 4100;
+        const PORT = process.env.PORT || 4101;
         app.listen(PORT, console.log("Port worked succesfully"));
     } catch (error) {
         console.log(`Error ${error}`);
