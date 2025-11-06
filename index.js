@@ -17,6 +17,7 @@ app.set("view engine", "hbs");
 app.set("views", "./views");
 
 app.use(express.static("views"));
+app.use(express.urlencoded({ extended: true }));
 app.use(json());
 
 app.use(AuthRouter);

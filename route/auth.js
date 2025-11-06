@@ -15,11 +15,21 @@ router.get("/login", (req, res) => {
     });
 });
 
+router.post("/login", (req, res) => {
+    console.log(req.body);
+    res.redirect("/");
+});
+
 router.get("/register", (req, res) => {
     res.render("register", {
         title: "Register | Eli",
         isRegister: true,
     });
+});
+
+router.post("/register", (req, res) => {
+    console.log(req.body);
+    res.redirect("/");
 });
 
 export default router;
