@@ -1,1 +1,66 @@
-<h1>add</h1>
+<div class="w-50 mx-auto">
+
+    <form action="/add" method="POST">
+
+        <h1 class="h3 mb-3 fw-bold text-muted text-center"> Add Product</h1>
+
+        {{#if addError}}
+            <div
+                class="alert alert-danger alert-dismissible fade show"
+                role="alert"
+            >
+                <strong>{{addError}}!</strong>
+                You should check in on some of those fields below.
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                ></button>
+            </div>
+        {{/if}}
+        <div class="form-floating mb-2">
+            <input
+                type="text"
+                class="form-control"
+                id="floatingInput"
+                placeholder="name@example.com"
+                name="title"
+            />
+            <label for="floatingInput mb-2">Title</label>
+        </div>
+        <div class="form-floating">
+            <textarea
+                class="form-control mb-2"
+                placeholder="Leave a comment here"
+                id="floatingTextarea2"
+                style="height: 100px"
+                name="description"
+            ></textarea>
+            <label for="floatingTextarea2">Description</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input
+                type="text"
+                class="form-control"
+                id="floatingPassword"
+                placeholder="Image"
+                name="image"
+            />
+            <label for="floatingPassword mb-2">Image</label>
+        </div>
+        <div class="input-group mb-3 h-5">
+            <span class="input-group-text" id="basic-addon1">$</span>
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Price"
+                aria-label="Price"
+                aria-describedby="basic-addon1"
+                name="price"
+                style="height: 60px"
+            />
+        </div>
+        <button class="btn btn-primary w-100 py-2" type="submit">Create</button>
+    </form>
+</div>

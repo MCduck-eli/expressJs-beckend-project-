@@ -3,12 +3,18 @@ import User from "../modules/User.js";
 import bcrypt from "bcrypt";
 import generateToken from "../service/token.js";
 import authMiddleware from "../middleware/auth.js";
+import Product from "../modules/Product.js";
 
 const router = Router();
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
+    const products = await Product.find().lean();
+
+    console.log(products);
+
     res.render("index", {
         title: "Boomshop | Eli",
+        products: products,
     });
 });
 
@@ -55,7 +61,6 @@ router.post("/login", async (req, res) => {
     }
     const token = generateToken(userExit);
     res.cookie("token", token, { secure: true });
-
     res.redirect("/");
 });
 
