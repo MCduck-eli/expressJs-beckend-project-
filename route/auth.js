@@ -1,6 +1,8 @@
 import { Router } from "express";
 import User from "../modules/User.js";
 import bcrypt from "bcrypt";
+import generateToken from "../service/token.js";
+import authMiddleware from "../middleware/auth.js";
 
 const router = Router();
 
@@ -10,12 +12,18 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/login", (req, res) => {
+router.get("/login", authMiddleware, (req, res) => {
     res.render("login", {
         title: "Login | Eli",
         isLogin: true,
         loginError: req.flash("loginError"),
     });
+});
+
+router.get("/logout", (req, res) => {
+    res.clearCookie("token");
+    res.redirect("/login");
+    return;
 });
 
 router.post("/login", async (req, res) => {
@@ -45,10 +53,13 @@ router.post("/login", async (req, res) => {
         res.redirect("/login");
         return;
     }
-    console.log(userExit);
+    const token = generateToken(userExit);
+    res.cookie("token", token, { secure: true });
+
+    res.redirect("/");
 });
 
-router.get("/register", (req, res) => {
+router.get("/register", authMiddleware, (req, res) => {
     res.render("register", {
         title: "Register | Eli",
         isRegister: true,
@@ -80,6 +91,8 @@ router.post("/register", async (req, res) => {
     }
 
     const user = await User.create(userBase);
+    const token = generateToken(user._id);
+    res.cookie("token", token, { secure: true });
 
     res.redirect("/");
 });

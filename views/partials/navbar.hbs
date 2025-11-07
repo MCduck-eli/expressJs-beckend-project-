@@ -53,33 +53,50 @@
                     aria-label="Basic mixed styles example"
                 >
 
-                    {{#if isLogin}}
-                        <button type="button" class="btn btn-danger active"><a
-                                href="/login"
-                                class="text-decoration-none text-light"
-                            >Login</a></button>
-                    {{else}}
+                    {{#if token}}
+
                         <button type="button" class="btn btn-danger"><a
-                                href="/login"
+                                href="/logout"
                                 class="text-decoration-none text-light"
-                            >Login</a></button>
+                            >Log Out</a></button>
 
-                    {{/if}}
-
-                    {{#if isRegister}}
-
-                        <button type="button" class="btn btn-success active"><a
-                                href="/register"
-                                class="text-decoration-none text-light"
-                            >Register</a></button>
                     {{else}}
 
-                        <button type="button" class="btn btn-success"><a
-                                href="/register"
-                                class="text-decoration-none text-light"
-                            >Register</a></button>
+                        {{#if isLogin}}
+                            <button
+                                type="button"
+                                class="btn btn-danger active"
+                            ><a
+                                    href="/login"
+                                    class="text-decoration-none text-light"
+                                >Login</a></button>
+                        {{else}}
+                            <button type="button" class="btn btn-danger"><a
+                                    href="/login"
+                                    class="text-decoration-none text-light"
+                                >Login</a></button>
 
+                        {{/if}}
+
+                        {{#if isRegister}}
+
+                            <button
+                                type="button"
+                                class="btn btn-success active"
+                            ><a
+                                    href="/register"
+                                    class="text-decoration-none text-light"
+                                >Register</a></button>
+                        {{else}}
+
+                            <button type="button" class="btn btn-success"><a
+                                    href="/register"
+                                    class="text-decoration-none text-light"
+                                >Register</a></button>
+
+                        {{/if}}
                     {{/if}}
+
                 </div>
 
             </nav>
