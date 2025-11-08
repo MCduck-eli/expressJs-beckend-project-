@@ -1,13 +1,27 @@
 import { Router } from "express";
-import Product from "../modules/Product.js";
 import addMiddleware from "../middleware/add.js";
+import User from "../modules/User.js";
+import Product from "../modules/Product.js";
 
 const router = Router();
 
-router.get("/products", (req, res) => {
+router.get("/products", async (req, res) => {
+    const user = req.userId ? req.userId.toString() : null;
+    const products = await Product.find({ user }).populate("user").lean();
     res.render("products", {
         title: "Products | Eli",
         isProducts: true,
+        products: products,
+    });
+});
+
+router.get("/view/:id", async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findById(id).lean();
+
+    res.render("detaile", {
+        title: "Product | Eli",
+        product: product,
     });
 });
 
@@ -26,7 +40,33 @@ router.post("/add", async (req, res) => {
         res.redirect("/add");
         return;
     }
-    await Product.create(req.body);
+
+    const product = await Product.create({ ...req.body, user: req.userId });
+    console.log(product);
+
+    res.redirect("/");
+});
+
+router.get("/edit-product/:id", async (req, res) => {
+    const { id } = req.params;
+    const editProduct = await Product.findById(id).lean();
+
+    res.render("edit-product", {
+        title: "EditProduct | Eli",
+        editProduct: editProduct,
+    });
+});
+
+router.post("/edit-product/:id", async (req, res) => {
+    const { title, description, image, price } = req.body;
+    const { id } = req.params;
+    await Product.findByIdAndUpdate(id, req.body, { new: true });
+    res.redirect("/products");
+});
+
+router.get("/delete/:id", async (req, res) => {
+    const { id } = req.params;
+    await Product.findOneAndDelete(id);
     res.redirect("/");
 });
 

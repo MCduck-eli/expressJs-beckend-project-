@@ -6,14 +6,20 @@
 
                     <div class="card">
                         <img src={{image}} />
-                        <div class="card-body" style="height: 120px;">
+                        <div
+                            class="card-body position-relative"
+                            style="height: 120px;"
+                        >
                             <p class="card-text">{{title}}</p>
 
                             <div
                                 class="d-flex justify-content-end align-items-center"
                             >
 
-                                <small class="text-body-secondary">9 mins</small>
+                                <small
+                                    class="text-body-secondary position-absolute bottom-0 fw-bold"
+                                >{{formData createdAt}}</small>
+
                             </div>
                         </div>
                         <div class="card-footer">
@@ -22,18 +28,26 @@
                                 role="group"
                                 aria-label="Basic example"
                             >
-                                <button
+                                <a
                                     type="button"
                                     class="btn btn-outline-primary"
-                                >View</button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-secondary"
-                                >Edit</button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-danger"
-                                >Delete</button>
+                                    href="/view/{{_id}}"
+                                >View</a>
+                                {{#if @root.token}}
+                                    {{#ifequal user @root.userId}}
+
+                                        <a
+                                            type="button"
+                                            class="btn btn-outline-secondary"
+                                            href="/edit-product/{{_id}}"
+                                        >Edit</a>
+                                        <a
+                                            type="button"
+                                            class="btn btn-outline-danger"
+                                            href="/delete/{{_id}}"
+                                        >Delete</a>
+                                    {{/ifequal}}
+                                {{/if}}
                             </div>
                         </div>
                     </div>

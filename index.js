@@ -6,8 +6,10 @@ import session from "express-session";
 import flash from "connect-flash";
 import AuthRouter from "./route/auth.js";
 import ProductsRoter from "./route/product.js";
+import varHelpers from "./util/index.js";
 import cookieParser from "cookie-parser";
 import _varMiddleware from "./middleware/var.js";
+import userMiddleware from "./middleware/user.js";
 
 dotenv.config();
 
@@ -20,6 +22,7 @@ const hbs = create({
     layoutsDir: "./views/layouts",
     partialsDir: "./views/partials",
     extname: "hbs",
+    helpers: varHelpers,
 });
 
 app.engine("hbs", hbs.engine);
@@ -33,6 +36,7 @@ app.use(cookieParser());
 app.use(flash());
 app.use(json());
 app.use(_varMiddleware);
+app.use(userMiddleware);
 
 app.use(AuthRouter);
 app.use(ProductsRoter);

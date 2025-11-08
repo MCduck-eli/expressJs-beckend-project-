@@ -1,1 +1,47 @@
-<h1>product</h1>
+{{#if products.length}}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5">
+        {{#each products}}
+            <div class="col">
+                <div class="card-group">
+
+                    <div class="card">
+                        <img src={{image}} />
+                        <div
+                            class="card-body position-relative"
+                            style="height: 450px;"
+                        >
+                            <p class="card-text fw-bold">{{title}}</p>
+
+                            <div class="mb-3">
+                                {{description}}
+                            </div>
+                            <div
+                                class="d-flex justify-content-between align-items-center"
+                            >
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="avatar bg-primary">
+
+                                        {{getNameCharacter
+                                            user.userName
+                                            user.lastName
+                                        }}
+                                    </div>
+                                    <div class="">{{user.userName}}
+                                        {{user.lastName}}</div>
+                                </div>
+
+                                <small
+                                    class="text-body-secondary fw-bold"
+                                >{{price}}$.00</small>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+
+    </div>
+{{else}}
+    <p>No Product</p>
+{{/if}}
